@@ -1,0 +1,32 @@
+{
+  "name": "bookshop_api",
+  "version": "1.0.0",
+  "description": "bookshop REST API",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heda7/bookshop_api.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "bookshop",
+    "template"
+  ],
+  "author": "Ammar Yasser Ibrahim",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/heda7/bookshop_api/issues"
+  },
+  "homepage": "https://github.com/heda7/bookshop_api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "joi": "^17.2.0",
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.0"
+  }
+}
