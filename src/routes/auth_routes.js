@@ -4,18 +4,14 @@ const router = require('express').Router();
 const user_validator = require('../services/user_validator.js');
 const user_signup = require('../db_layer/user_signup.js');
 
-router.post('/signup_user/', (req, res) => {
+router.post('/signup/', (req, res) => {
     const API_KEY = req.headers['api_key'];
     if (API_KEY == process.env.API_KEY) {
-        const userAvatar = Buffer.from(req.body['avatar'], 'base64');
         const newUser = {
             name: req.body['name'],
             email: req.body['email'],
             password: req.body['password'],
             password_repeat: req.body['password_repeat'],
-            phoneNumber: req.body['phoneNumber'],
-            avatar: userAvatar,
-            gender: req.body['gender']
         };
 
         user_validator(newUser, (err) => {
@@ -39,7 +35,7 @@ router.post('/signup_user/', (req, res) => {
 
 });
 
-router.get('/login_user/', async (req, res) => {
+router.get('/login/', async (req, res) => {
 
 });
 

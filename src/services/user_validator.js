@@ -6,9 +6,6 @@ async function validate(user, callback) {
         email: Joi.string().email({ tlds: { allow: ['com', 'net'] } }).required(),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z]\\w{3,30}$')).required(),
         password_repeat: Joi.ref('password'),
-        phoneNumber: Joi.string().pattern(new RegExp('^01[0|1|2|5][0-9]{8}$')).required(),
-        avatar: Joi.any(),
-        gender: Joi.string().required(),
     });
     try {
         await user_schema.validateAsync(user);
