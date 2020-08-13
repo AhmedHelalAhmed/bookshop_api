@@ -50,7 +50,10 @@ router.get('/login/', (req, res) => {
             res.status(404).send('UserNotFound');
             return;
         }
-        res.send(response);
+        else {
+            res.send(response);
+        }
+
     });
 });
 
