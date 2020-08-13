@@ -4,7 +4,6 @@ function login(email, password, callback) {
     dbClient.connect();
     dbClient.query(`SELECT * FROM customers
     WHERE email = '${email}' AND password = '${password}'`, (err, res) => {
-        dbClient.end();
         if (err) {
             callback(err, null);
             return;
