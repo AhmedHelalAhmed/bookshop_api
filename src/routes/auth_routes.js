@@ -53,6 +53,7 @@ router.get('/login/', (req, res) => {
         else {
             res.send(response);
         }
+        res.end();
     });
 });
 
