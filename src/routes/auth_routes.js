@@ -11,7 +11,7 @@ router.post('/signup/', (req, res) => {
             name: req.body['name'],
             email: req.body['email'],
             password: req.body['password'],
-            password_repeat: req.body['password_repeat'],
+            confirmPassword: req.body['confirmPassword'],
         };
 
         user_validator(newUser, (err) => {
@@ -23,7 +23,7 @@ router.post('/signup/', (req, res) => {
             user_signup(newUser, (err) => {
                 if (err) {
                     console.log(err);
-                    res.status(400).send(err);
+                    res.status(400).send(err['detail']);
                     return;
                 }
                 res.send(newUser);

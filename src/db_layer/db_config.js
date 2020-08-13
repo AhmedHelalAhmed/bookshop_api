@@ -1,11 +1,12 @@
+require('dotenv').config()
 const {Client } = require('pg')
 
 const db_client = new Client({
-  user: 'fdsvlhrubrdweg',
-  password: '94247ff8641036bc51c39b65b9a584987fe70bcc52818749ef3c4808663e1678',
-  database: 'd6hvdjt8kvvpmv',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   port: 5432,
-  host: 'ec2-54-247-94-127.eu-west-1.compute.amazonaws.com',
+  host: process.env.DB_HOST,
   ssl: true
 });
 
