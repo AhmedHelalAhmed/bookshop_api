@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 const user_validator = require('../services/user_validator.js');
 const user_signup = require('../db_layer/user_signup.js');
+const user_login = require('../db_layer/user_login.js');
 
 router.post('/signup/', (req, res) => {
     const API_KEY = req.headers['api_key'];
@@ -13,7 +14,6 @@ router.post('/signup/', (req, res) => {
             password: req.body['password'],
             confirmPassword: req.body['confirmPassword'],
         };
-
         user_validator(newUser, (err) => {
             if (err) {
                 const errorMessage = err['details'][0]['message'];
@@ -22,7 +22,6 @@ router.post('/signup/', (req, res) => {
             }
             user_signup(newUser, (err) => {
                 if (err) {
-                    console.log(err);
                     res.status(400).send(err['detail']);
                     return;
                 }
@@ -35,8 +34,26 @@ router.post('/signup/', (req, res) => {
 
 });
 
-router.get('/login/', async (req, res) => {
-
+router.get('/login/', (req, res) => {
+    const email = req.body['email'];
+    const password = req.body['password'];
+    if (!email || !password) {
+        res.status(400).send('Bad request!');
+        return;
+    }
+    user_login(email, password, (err, response) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        if (response == 'UserNotFound') {
+            res.status(404).send('UserNotFound');
+            return;
+        }
+        else {
+            res.send(response);
+        }
+    });
 });
 
 module.exports = router;
