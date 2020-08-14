@@ -37,7 +37,6 @@ router.post('/add_new_book/', (req, res) => {
 });
 
 router.get('/all/', (req, res) => {
-    console.log('books routes 41');
     get_books((err, result) => {
         if (err) {
             res.status(500).send(err);

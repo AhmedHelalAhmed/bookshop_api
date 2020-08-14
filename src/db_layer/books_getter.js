@@ -1,8 +1,12 @@
 const db_client = require('./db_config.js');
 
 function get_books(callback) {
+    console.log(process.env.DB_USER);
+    console.log(process.env.DB_PASSWORD);
+    console.log(process.env.DB_NAME);
+    console.log(process.env.DB_HOST);
     console.log('books_getter 5');
-    db_client.query('SELECT * FROM books',
+    db_client.query('SELECT * FROM books;',
         (err, res) => {
             console.log('books_getter 8');
             if (err) {
