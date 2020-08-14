@@ -39,13 +39,10 @@ router.post('/add_new_book/', (req, res) => {
 router.get('/all/', (req, res) => {
     console.log('books routes 41');
     get_books((err, result) => {
-        console.log('books routes 43');
         if (err) {
-            console.log('books routes 45');
             res.status(500).send(err);
             return;
         }
-        console.log('books routes 49');
         res.send(result);
     });
 });
