@@ -1,37 +1,36 @@
 require('dotenv').config()
 const router = require('express').Router();
 
-const user_validator = require('../services/user_validator.js');
-const user_signup = require('../db_layer/user_signup.js');
-const user_login = require('../db_layer/user_login.js');
+const validate_user = require('../services/user_validator.js');
+const signup_user = require('../db_layer/user_signup.js');
+const login_user = require('../db_layer/user_login.js');
 
 router.post('/signup/', (req, res) => {
     const API_KEY = req.headers['api_key'];
-    if (API_KEY == process.env.API_KEY) {
-        const newUser = {
-            name: req.body['name'],
-            email: req.body['email'],
-            password: req.body['password'],
-            confirmPassword: req.body['confirmPassword'],
-        };
-        user_validator(newUser, (err) => {
+    if (API_KEY != process.env.API_KEY) {
+        res.status(403).send('access forbidden!');
+        return;
+    }
+    const new_user = {
+        name: req.body['name'],
+        email: req.body['email'],
+        password: req.body['password'],
+        confirmPassword: req.body['confirmPassword'],
+    };
+    validate_user(new_user, (err) => {
+        if (err) {
+            const errorMessage = err['details'][0]['message'];
+            res.status(400).send(errorMessage);
+            return;
+        }
+        signup_user(new_user, (err) => {
             if (err) {
-                const errorMessage = err['details'][0]['message'];
-                res.status(400).send(errorMessage);
+                res.status(500).send(err['detail']);
                 return;
             }
-            user_signup(newUser, (err) => {
-                if (err) {
-                    res.status(400).send(err['detail']);
-                    return;
-                }
-                res.send(newUser);
-            });
+            res.send(new_user);
         });
-    } else {
-        res.status(403).send('access forbidden!');
-    }
-
+    });
 });
 
 router.get('/login/', (req, res) => {
@@ -41,7 +40,7 @@ router.get('/login/', (req, res) => {
         res.status(400).send('Bad request!');
         return;
     }
-    user_login(email, password, (err, response) => {
+    login_user(email, password, (err, response) => {
         if (err) {
             res.status(500).send(err);
             return;
