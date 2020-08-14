@@ -25,7 +25,7 @@ router.post('/signup/', (req, res) => {
         }
         signup_user(new_user, (err) => {
             if (err) {
-                res.status(500).send(err['detail']);
+                res.status(400).send(err['detail']);
                 return;
             }
             res.send(new_user);
@@ -52,7 +52,6 @@ router.get('/login/', (req, res) => {
         else {
             res.send(response);
         }
-
     });
 });
 

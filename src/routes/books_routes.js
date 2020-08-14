@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 const validate_book = require('../services/book_validator.js');
 const add_new_book = require('../db_layer/new_books_adder.js');
+const get_books = require('../db_layer/books_getter.js');
 
 router.post('/add_new_book/', (req, res) => {
     const API_KEY = req.headers['api_key'];
@@ -32,6 +33,16 @@ router.post('/add_new_book/', (req, res) => {
             }
             res.send(new_book);
         });
+    });
+});
+
+router.get('/all/', (req, res) => {
+    get_books((err, result) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        res.send(result);
     });
 });
 
