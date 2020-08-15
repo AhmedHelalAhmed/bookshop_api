@@ -39,7 +39,7 @@ router.get('/all/', (req, res) => {
             return res.status(500).send(err);
         }
         res.json(result);
-        res.end();
+        return res.end();
     });
 });
 
