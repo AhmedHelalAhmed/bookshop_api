@@ -6,8 +6,7 @@ function get_books(callback) {
             if (err) {
                 return callback(err, null);
             }
-            callback(null, res['rows']);
-            return res.end();
+            return callback(null, res['rows']);
         });
 }
 
