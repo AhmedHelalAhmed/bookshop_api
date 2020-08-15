@@ -8,8 +8,7 @@ const login_user = require('../db_layer/user_login.js');
 router.post('/signup/', (req, res) => {
     const API_KEY = req.headers['api_key'];
     if (API_KEY != process.env.API_KEY) {
-        res.status(403).send('access forbidden!');
-        return;
+        return res.status(403).send('access forbidden!');
     }
     const new_user = {
         name: req.body['name'],
@@ -20,15 +19,13 @@ router.post('/signup/', (req, res) => {
     validate_user(new_user, (err) => {
         if (err) {
             const errorMessage = err['details'][0]['message'];
-            res.status(400).send(errorMessage);
-            return;
+            return res.status(400).send(errorMessage);
         }
         signup_user(new_user, (err) => {
             if (err) {
-                res.status(400).send(err['detail']);
-                return;
+                return res.status(400).send(err['detail']);
             }
-            res.send(new_user);
+            return res.json(new_user);
         });
     });
 });
@@ -37,20 +34,17 @@ router.get('/login/', (req, res) => {
     const email = req.body['email'];
     const password = req.body['password'];
     if (!email || !password) {
-        res.status(400).send('Bad request!');
-        return;
+        return res.status(400).send('Bad request!');
     }
     login_user(email, password, (err, response) => {
         if (err) {
-            res.status(500).send(err);
-            return;
+            return res.status(500).send(err);
         }
         if (response == 'UserNotFound') {
-            res.status(404).send('UserNotFound');
-            return;
+            return res.status(404).send('UserNotFound');
         }
         else {
-            res.send(response);
+            return res.json(response);
         }
     });
 });

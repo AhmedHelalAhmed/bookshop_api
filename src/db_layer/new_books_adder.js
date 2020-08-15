@@ -7,10 +7,9 @@ function add_new_book(book, callback) {
     '${book.publish_date}', '${book.author}', '${book.price}', '${book.genre}');`,
         (err) => {
             if (err) {
-                callback(err);
-                return;
+                return callback(err);
             }
-            callback(null);
+            return callback(null);
         });
 }
 

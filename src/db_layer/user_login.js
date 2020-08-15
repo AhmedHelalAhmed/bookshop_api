@@ -5,14 +5,13 @@ function login(email, password, callback) {
     WHERE email = '${email}' AND password = '${password}'`,
         (err, res) => {
             if (err) {
-                callback(err, null);
-                return;
+                return callback(err, null);
             }
             if (res['rowCount'] == 1) {
-                callback(null, res['rows'][0]);
+                return callback(null, res['rows'][0]);
             }
             else {
-                callback(null, 'UserNotFound');
+                return callback(null, 'UserNotFound');
             }
         });
 }

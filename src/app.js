@@ -11,7 +11,7 @@ app.use('/api/auth/', auth_routes);
 app.use('/api/books/', books_routes);
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    return res.sendFile(__dirname + '/index.html');
 });
 
 const port = process.env.PORT || 5000;

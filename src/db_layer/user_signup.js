@@ -5,10 +5,9 @@ function signup(user, callback) {
     VALUES ('${user.name}', '${user.email}', '${user.password}');`,
         (err) => {
             if (err) {
-                callback(err);
-                return;
+                return callback(err);
             }
-            callback(null);
+            return callback(null);
         });
 }
 

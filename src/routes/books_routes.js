@@ -8,8 +8,7 @@ const get_books = require('../db_layer/books_getter.js');
 router.post('/add_new_book/', (req, res) => {
     const API_KEY = req.headers['api_key'];
     if (API_KEY != process.env.API_KEY) {
-        res.status(403).send('access forbidden!');
-        return;
+        return res.status(403).send('access forbidden!');
     }
     const new_book = {
         title: req.body['title'],
@@ -23,15 +22,13 @@ router.post('/add_new_book/', (req, res) => {
     validate_book(new_book, (err) => {
         if (err) {
             const errorMessage = err['details'][0]['message'];
-            res.status(400).send(errorMessage);
-            return;
+            return res.status(400).send(errorMessage);
         }
         add_new_book(new_book, (err) => {
             if (err) {
-                res.status(500).send(err['detail']);
-                return;
+                return res.status(500).send(err['detail']);
             }
-            res.send(new_book);
+            return res.json(new_book);
         });
     });
 });
@@ -39,10 +36,9 @@ router.post('/add_new_book/', (req, res) => {
 router.get('/all/', (req, res) => {
     get_books((err, result) => {
         if (err) {
-            res.status(500).send(err);
-            return;
+            return res.status(500).send(err);
         }
-        res.send(result);
+        return res.json(result);
     });
 });
 
