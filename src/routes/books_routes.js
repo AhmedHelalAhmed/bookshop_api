@@ -2,8 +2,7 @@ require('dotenv').config()
 const router = require('express').Router();
 
 const validate_book = require('../services/book_validator.js');
-const add_new_book = require('../db_layer/new_books_adder.js');
-const get_books = require('../db_layer/books_getter.js');
+const books_admin = require('../db_layer/books_admin.js');
 
 router.post('/add_new_book/', (req, res) => {
     const API_KEY = req.headers['api_key'];
@@ -24,7 +23,7 @@ router.post('/add_new_book/', (req, res) => {
             const errorMessage = err['details'][0]['message'];
             return res.status(400).send(errorMessage);
         }
-        add_new_book(new_book, (err) => {
+        books_admin.add_new_book(new_book, (err) => {
             if (err) {
                 return res.status(500).send(err['detail']);
             }
@@ -34,13 +33,35 @@ router.post('/add_new_book/', (req, res) => {
 });
 
 router.get('/all/', (req, res) => {
-    get_books((err, result) => {
+    books_admin.get_books((err, result) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json(result);
-        return res.end();
+        return res.json(result);
     });
+});
+
+
+router.get('/search/', (req, res) => {
+    const search_keyword = req.query['keyword'];
+    if (!search_keyword) {
+        return res.status(400).send('keyword must not be empty!');
+    }
+    books_admin.search(search_keyword, (err, result) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        return res.json(result);
+    });
+});
+
+router.put('//', (req, res) => {
+
+});
+
+
+router.delete('//', (req, res) => {
+
 });
 
 module.exports = router;

@@ -2,8 +2,7 @@ require('dotenv').config()
 const router = require('express').Router();
 
 const validate_user = require('../services/user_validator.js');
-const signup_user = require('../db_layer/user_signup.js');
-const login_user = require('../db_layer/user_login.js');
+const user_auth = require('../db_layer/user_auth.js');
 
 router.post('/signup/', (req, res) => {
     const API_KEY = req.headers['api_key'];
@@ -21,7 +20,7 @@ router.post('/signup/', (req, res) => {
             const errorMessage = err['details'][0]['message'];
             return res.status(400).send(errorMessage);
         }
-        signup_user(new_user, (err) => {
+        user_auth.signup(new_user, (err) => {
             if (err) {
                 return res.status(400).send(err['detail']);
             }
@@ -36,7 +35,7 @@ router.get('/login/', (req, res) => {
     if (!email || !password) {
         return res.status(400).send('Bad request!');
     }
-    login_user(email, password, (err, response) => {
+    user_auth.login(email, password, (err, response) => {
         if (err) {
             return res.status(500).send(err);
         }
