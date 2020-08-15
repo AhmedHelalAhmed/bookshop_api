@@ -9,7 +9,7 @@ async function validate(book, callback) {
         description: Joi.string(),
         quantity: Joi.number().integer().min(1).required(),
         publish_date: Joi.date().required(),
-        author: Joi.string().min(3).required(),
+        author: Joi.string().min(3).max(50).required(),
         price: Joi.number().min(1).precision(2).required(),
         genre: Joi.string().valid(...genres).required(),
     });
