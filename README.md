@@ -4,6 +4,7 @@ _This repo is a showcase of a RESTful API built with Nodejs for a virtual booksh
 
 ## tech stack
 
+* MVVM architecture
 * Nodejs
 * Express framework
 * Joi validation

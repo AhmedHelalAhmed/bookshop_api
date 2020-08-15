@@ -41,7 +41,6 @@ router.get('/all/', (req, res) => {
     });
 });
 
-
 router.get('/search/', (req, res) => {
     const search_keyword = req.query['keyword'];
     if (!search_keyword) {
@@ -55,13 +54,21 @@ router.get('/search/', (req, res) => {
     });
 });
 
-router.put('//', (req, res) => {
-
-});
-
-
-router.delete('//', (req, res) => {
-
+router.delete('/delete_book/', (req, res) => {
+    const API_KEY = req.headers['api_key'];
+    if (API_KEY != process.env.API_KEY) {
+        return res.status(403).send('access forbidden!');
+    }
+    const book_id = req.query['book_id'];
+    if (!book_id) {
+        return res.status(400).send('book id must not be empty');
+    }
+    books_admin.delete_book(book_id, (err) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        return res.send(`book ${book_id} deleted successfully`);
+    });
 });
 
 module.exports = router;

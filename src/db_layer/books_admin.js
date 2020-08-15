@@ -1,4 +1,5 @@
 const db_client = require('./db_config.js');
+const { func } = require('joi');
 
 function add_new_book(book, callback) {
     db_client.query(`INSERT INTO books 
@@ -34,6 +35,17 @@ function search(keyword, callback) {
         });
 }
 
+function delete_book(book_id, callback) {
+    db_client.query(`DELETE FROM books WHERE id = ${book_id};`,
+        (err) => {
+            if (err) {
+                return callback(err);
+            }
+            return callback(null);
+        });
+}
+
 module.exports.add_new_book = add_new_book;
 module.exports.get_books = get_books;
 module.exports.search = search;
+module.exports.delete_book = delete_book;
